@@ -1,0 +1,9 @@
+obj/common.o
+obj/kasm.o
+obj/kb.o
+obj/kernel.bin
+obj/link.ld
+obj/main.o
+obj/monitor.o
+Documentation/scancode_page2.gif
+Documentation/scancode_page1.gif
