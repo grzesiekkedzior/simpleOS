@@ -70,6 +70,8 @@ void monitor_put(char c)
     // Handle a backspace, by moving the cursor back one space
     if (c == 0x08 && cursor_x)
     {
+        location = video_memory + (cursor_y*80 + cursor_x - 1);
+        *location = 0x20 | attribute;
         cursor_x--;
     }
 
