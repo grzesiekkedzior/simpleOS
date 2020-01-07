@@ -67,12 +67,20 @@ void monitor_put(char c)
     u16int attribute = attributeByte << 8;
     u16int *location;
 
-    // Handle a backspace, by moving the cursor back one space
-    if (c == 0x08 && cursor_x)
+    if (c == 0x08 && (cursor_x + cursor_y) > 0)
     {
-        location = video_memory + (cursor_y*80 + cursor_x - 1);
-        *location = 0x20 | attribute;
-        cursor_x--;
+        if (cursor_x == 0) {
+            cursor_y--;
+            cursor_x=79;
+            location = video_memory + (cursor_y*80 + cursor_x);
+            *location = 0x20 | attribute;
+        } else {
+            location = video_memory + (cursor_y*80 + cursor_x - 1);
+            *location = 0x20 | attribute;
+            cursor_x--;
+        }
+        
+        
     }
 
     // Handle a tab by increasing the cursor's X, but only to a point
