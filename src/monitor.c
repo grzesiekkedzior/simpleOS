@@ -1,9 +1,29 @@
 // monitor.c -- Defines functions for writing to the monitor.
 //             heavily based on Bran's kernel development tutorials,
 //             but rewritten for JamesM's kernel tutorials www.jamesmolloy.co.uk
-//             to start visit wiki.osdev.org 
+//             to start visit wiki.osdev.org
 
 #include "monitor.h"
+/* Hardware text mode color constants. */
+enum vga_color
+{
+    VGA_COLOR_BLACK = 0,
+    VGA_COLOR_BLUE = 1,
+    VGA_COLOR_GREEN = 2,
+    VGA_COLOR_CYAN = 3,
+    VGA_COLOR_RED = 4,
+    VGA_COLOR_MAGENTA = 5,
+    VGA_COLOR_BROWN = 6,
+    VGA_COLOR_LIGHT_GREY = 7,
+    VGA_COLOR_DARK_GREY = 8,
+    VGA_COLOR_LIGHT_BLUE = 9,
+    VGA_COLOR_LIGHT_GREEN = 10,
+    VGA_COLOR_LIGHT_CYAN = 11,
+    VGA_COLOR_LIGHT_RED = 12,
+    VGA_COLOR_LIGHT_MAGENTA = 13,
+    VGA_COLOR_LIGHT_BROWN = 14,
+    VGA_COLOR_WHITE = 15,
+};
 
 // The VGA framebuffer starts at 0xB8000.
 u16int *video_memory = (u16int *)0xB8000;
@@ -31,19 +51,19 @@ static void scroll()
     u16int blank = 0x20 /* space */ | (attributeByte << 8);
 
     // Row 25 is the end, this means we need to scroll up
-    if(cursor_y >= 25)
+    if (cursor_y >= 25)
     {
         // Move the current text chunk that makes up the screen
         // back in the buffer by a line
         int i;
-        for (i = 0*80; i < 24*80; i++)
+        for (i = 0 * 80; i < 24 * 80; i++)
         {
-            video_memory[i] = video_memory[i+80];
+            video_memory[i] = video_memory[i + 80];
         }
 
         // The last line should now be blank. Do this by writing
         // 80 spaces to it.
-        for (i = 24*80; i < 25*80; i++)
+        for (i = 24 * 80; i < 25 * 80; i++)
         {
             video_memory[i] = blank;
         }
@@ -56,12 +76,12 @@ static void scroll()
 void monitor_put(char c)
 {
     // The background colour is black (0), the foreground is white (15).
-    u8int backColour = 0;
-    u8int foreColour = 15;
+    u8int backColour = VGA_COLOR_LIGHT_RED;
+    u8int foreColour = VGA_COLOR_GREEN;
 
-    // The attribute byte is made up of two nibbles - the lower being the 
+    // The attribute byte is made up of two nibbles - the lower being the
     // foreground colour, and the upper the background colour.
-    u8int  attributeByte = (backColour << 4) | (foreColour & 0x0F);
+    u8int attributeByte = (backColour << 4) | (foreColour & 0x0F);
     // The attribute byte is the top 8 bits of the word we have to send to the
     // VGA board.
     u16int attribute = attributeByte << 8;
@@ -69,25 +89,46 @@ void monitor_put(char c)
 
     if (c == 0x08 && (cursor_x + cursor_y) > 0)
     {
-        if (cursor_x == 0) {
+        if (cursor_x == 0)
+        {
             cursor_y--;
-            cursor_x=79;
-            location = video_memory + (cursor_y*80 + cursor_x);
+            cursor_x = 79;
+            u8int backColour = VGA_COLOR_BLACK;
+            u8int foreColour = VGA_COLOR_GREEN;
+
+            // The attribute byte is made up of two nibbles - the lower being the
+            // foreground colour, and the upper the background colour.
+            u8int attributeByte = (backColour << 4) | (foreColour & 0x0F);
+            // The attribute byte is the top 8 bits of the word we have to send to the
+            // VGA board.
+            u16int attribute = attributeByte << 8;
+            u16int *location;
+            location = video_memory + (cursor_y * 80 + cursor_x);
             *location = 0x20 | attribute;
-        } else {
-            location = video_memory + (cursor_y*80 + cursor_x - 1);
+        }
+        else
+        {
+            u8int backColour = VGA_COLOR_BLACK;
+            u8int foreColour = VGA_COLOR_WHITE;
+
+            // The attribute byte is made up of two nibbles - the lower being the
+            // foreground colour, and the upper the background colour.
+            u8int attributeByte = (backColour << 4) | (foreColour & 0x0F);
+            // The attribute byte is the top 8 bits of the word we have to send to the
+            // VGA board.
+            u16int attribute = attributeByte << 8;
+            u16int *location;
+            location = video_memory + (cursor_y * 80 + cursor_x - 1);
             *location = 0x20 | attribute;
             cursor_x--;
         }
-        
-        
     }
 
     // Handle a tab by increasing the cursor's X, but only to a point
     // where it is divisible by 8.
     else if (c == 0x09)
     {
-        cursor_x = (cursor_x+8) & ~(8-1);
+        cursor_x = (cursor_x + 8) & ~(8 - 1);
     }
 
     // Handle carriage return
@@ -103,9 +144,9 @@ void monitor_put(char c)
         cursor_y++;
     }
     // Handle any other printable character.
-    else if(c >= ' ')
+    else if (c >= ' ')
     {
-        location = video_memory + (cursor_y*80 + cursor_x);
+        location = video_memory + (cursor_y * 80 + cursor_x);
         *location = c | attribute;
         cursor_x++;
     }
@@ -115,14 +156,13 @@ void monitor_put(char c)
     if (cursor_x >= 80)
     {
         cursor_x = 0;
-        cursor_y ++;
+        cursor_y++;
     }
 
     // Scroll the screen if needed.
     scroll();
     // Move the hardware cursor.
     move_cursor();
-
 }
 
 // Clears the screen, by copying lots of spaces to the framebuffer.
@@ -133,7 +173,7 @@ void monitor_clear()
     u16int blank = 0x20 /* space */ | (attributeByte << 8);
 
     int i;
-    for (i = 0; i < 80*25; i++)
+    for (i = 0; i < 80 * 25; i++)
     {
         video_memory[i] = blank;
     }
