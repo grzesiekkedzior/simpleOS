@@ -30,7 +30,7 @@ char readStr()
                 i++;
                 break;
         case 4:
-                monitor_put('3');
+                monitor_put(('3'));
                 buffstr[i] = '3';
                 i++;
                 break;
@@ -290,7 +290,7 @@ char readStr()
                 buffstr[i] = '/';
                 i++;
                 break;            
-      /*case 56:
+        /*case 56:
                 printch(' ');           Right shift
                 buffstr[i] = ' ';
                 i++;
@@ -300,7 +300,13 @@ char readStr()
                 buffstr[i] = ' ';
                 i++;
                 break;
-            }
+
+        case 58:
+                monitor_put(13); //ENTER
+                break;
+
+            
+                }
         }
     }
     buffstr[i] = 0;                   

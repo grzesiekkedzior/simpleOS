@@ -76,8 +76,8 @@ static void scroll()
 void monitor_put(char c)
 {
     // The background colour is black (0), the foreground is white (15).
-    u8int backColour = VGA_COLOR_LIGHT_RED;
-    u8int foreColour = VGA_COLOR_GREEN;
+    u8int backColour = VGA_COLOR_BLACK;
+    u8int foreColour = VGA_COLOR_WHITE;
 
     // The attribute byte is made up of two nibbles - the lower being the
     // foreground colour, and the upper the background colour.
@@ -94,7 +94,7 @@ void monitor_put(char c)
             cursor_y--;
             cursor_x = 79;
             u8int backColour = VGA_COLOR_BLACK;
-            u8int foreColour = VGA_COLOR_GREEN;
+            u8int foreColour = VGA_COLOR_WHITE;
 
             // The attribute byte is made up of two nibbles - the lower being the
             // foreground colour, and the upper the background colour.
@@ -130,19 +130,21 @@ void monitor_put(char c)
     {
         cursor_x = (cursor_x + 8) & ~(8 - 1);
     }
+    
 
-    // Handle carriage return
-    else if (c == '\r')
-    {
-        cursor_x = 0;
-    }
-
-    // Handle newline by moving cursor back to left and increasing the row
-    else if (c == '\n')
+    // Handle ENTER
+    else if (c == 28)
     {
         cursor_x = 0;
         cursor_y++;
     }
+
+    // Handle newline by moving cursor back to left and increasing the row
+    // else if (c == '\n')
+    // {
+    //     cursor_x = 0;
+    //     cursor_y++;
+    // }
     // Handle any other printable character.
     else if (c >= ' ')
     {
@@ -150,6 +152,9 @@ void monitor_put(char c)
         *location = c | attribute;
         cursor_x++;
     }
+
+
+    
 
     // Check if we need to insert a new line because we have reached the end
     // of the screen.
