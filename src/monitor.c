@@ -139,12 +139,12 @@ void monitor_put(char c)
         cursor_y++;
     }
 
-    // Handle newline by moving cursor back to left and increasing the row
-    // else if (c == '\n')
-    // {
-    //     cursor_x = 0;
-    //     cursor_y++;
-    // }
+    //Handle newline by moving cursor back to left and increasing the row
+    else if (c == '\n')
+    {
+        cursor_x = 0;
+        cursor_y++;
+    }
     // Handle any other printable character.
     else if (c >= ' ')
     {
