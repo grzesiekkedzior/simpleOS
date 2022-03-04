@@ -1,5 +1,6 @@
 #include "monitor.h"
 #include "common.h"
+#include "cpu.h"
 
 // mainly based on pdoane implementation
 

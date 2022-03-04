@@ -3,7 +3,7 @@
 
 
 # How to run it
-* install qemu and cmake;
+* install qemu, nasm and cmake;
 * open terminal inside root directory;
 ```shell
 mkdir build
