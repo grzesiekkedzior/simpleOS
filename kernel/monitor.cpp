@@ -51,20 +51,17 @@ static void scroll()
     u16int blank = 0x20 /* space */ | (attributeByte << 8);
 
     // Row 25 is the end, this means we need to scroll up
-    if (cursor_y >= 25)
-    {
+    if (cursor_y >= 25) {
         // Move the current text chunk that makes up the screen
         // back in the buffer by a line
         int i;
-        for (i = 0 * 80; i < 24 * 80; i++)
-        {
+        for (i = 0 * 80; i < 24 * 80; i++) {
             video_memory[i] = video_memory[i + 80];
         }
 
         // The last line should now be blank. Do this by writing
         // 80 spaces to it.
-        for (i = 24 * 80; i < 25 * 80; i++)
-        {
+        for (i = 24 * 80; i < 25 * 80; i++) {
             video_memory[i] = blank;
         }
         // The cursor should now be on the last line.
@@ -87,10 +84,8 @@ void monitor_put(char c)
     u16int attribute = attributeByte << 8;
     u16int *location;
 
-    if (c == 0x08 && (cursor_x + cursor_y) > 0)
-    {
-        if (cursor_x == 0)
-        {
+    if (c == 0x0E && (cursor_x + cursor_y) > 0) {
+        if (cursor_x == 0) {
             cursor_y--;
             cursor_x = 79;
             u8int backColour = VGA_COLOR_BLACK;
@@ -106,8 +101,7 @@ void monitor_put(char c)
             location = video_memory + (cursor_y * 80 + cursor_x);
             *location = 0x20 | attribute;
         }
-        else
-        {
+        else {
             u8int backColour = VGA_COLOR_BLACK;
             u8int foreColour = VGA_COLOR_WHITE;
 
@@ -126,40 +120,32 @@ void monitor_put(char c)
 
     // Handle a tab by increasing the cursor's X, but only to a point
     // where it is divisible by 8.
-    else if (c == 0x09)
-    {
+    else if (c == 0x09) {
         cursor_x = (cursor_x + 8) & ~(8 - 1);
     }
     
 
     // Handle ENTER
-    else if (c == 13)
-    {
+    else if (c == 13) {
         cursor_x = 0;
         cursor_y++;
     }
 
     //Handle newline by moving cursor back to left and increasing the row
-    else if (c == '\n')
-    {
+    else if (c == '\n') {
         cursor_x = 0;
         cursor_y++;
     }
     // Handle any other printable character.
-    else if (c >= ' ')
-    {
+    else if (c >= ' ') {
         location = video_memory + (cursor_y * 80 + cursor_x);
         *location = c | attribute;
         cursor_x++;
     }
 
-
-    
-
     // Check if we need to insert a new line because we have reached the end
     // of the screen.
-    if (cursor_x >= 80)
-    {
+    if (cursor_x >= 80) {
         cursor_x = 0;
         cursor_y++;
     }
@@ -178,8 +164,7 @@ void monitor_clear()
     u16int blank = 0x20 /* space */ | (attributeByte << 8);
 
     int i;
-    for (i = 0; i < 80 * 25; i++)
-    {
+    for (i = 0; i < 80 * 25; i++) {
         video_memory[i] = blank;
     }
 
@@ -193,8 +178,7 @@ void monitor_clear()
 void monitor_write(const char *c)
 {
     int i = 0;
-    while (c[i])
-    {
+    while (c[i]) {
         monitor_put(c[i++]);
     }
 }

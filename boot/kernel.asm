@@ -7,7 +7,7 @@ section         .text
         dd      - (0x1BADB002+0x00)
         
 global start
-extern main                     ; this function is gonna be located in our c code(kernel.c)
+extern main                     ;this function is gonna be located in our c code(kernel.c)
 start:
         cli                     ;clears the interrupts
         call main               ;send processor to continue execution from the kamin funtion in c code

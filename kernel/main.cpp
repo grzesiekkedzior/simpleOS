@@ -2,7 +2,8 @@
 #include "types.h"
 #include "time.h"
 #include "cpu.h"
-#include "kb.h"
+#include "../include/drivers/keyboard.h"
+
 
 extern "C" void set_idt();
 extern "C"
@@ -25,7 +26,8 @@ extern "C" int main()
     monitor_put('\n');
     cpu_detect();
     monitor_write("\n>");
-    readStr();
+    io_handler();
+
 
     return 0;
 }

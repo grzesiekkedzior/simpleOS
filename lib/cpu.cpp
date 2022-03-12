@@ -95,8 +95,7 @@ void cpu_detect()
     monitor_write("CPU Vendor: \n");
     monitor_write(vendor);
 
-    if (largestStandardFunc >= 0x01)
-    {
+    if (largestStandardFunc >= 0x01) {
         cpuid(0x01, &eax, &ebx, &ecx, &edx);
 
         monitor_write("Features:");
@@ -128,8 +127,7 @@ void cpu_detect()
     u32int largestExtendedFunc;
     cpuid(0x80000000, &largestExtendedFunc, &ebx, &ecx, &edx);
 
-    if (largestExtendedFunc >= 0x80000001)
-    {
+    if (largestExtendedFunc >= 0x80000001) {
         cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
 
         if (edx & EDX_64_BIT)
@@ -138,8 +136,7 @@ void cpu_detect()
         }
     }
 
-    if (largestExtendedFunc >= 0x80000004)
-    {
+    if (largestExtendedFunc >= 0x80000004) {
         char name[48];
         cpuid(0x80000002, (u32int *)(name +  0), (u32int *)(name +  4), (u32int *)(name +  8), (u32int *)(name + 12));
         cpuid(0x80000003, (u32int *)(name + 16), (u32int *)(name + 20), (u32int *)(name + 24), (u32int *)(name + 28));
@@ -147,8 +144,7 @@ void cpu_detect()
 
         // Processor name is right justified with leading spaces
         char *p = name;
-        while (*p == ' ')
-        {
+        while (*p == ' ') {
             ++p;
         }
 
