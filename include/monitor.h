@@ -17,6 +17,12 @@ extern "C"
     // Output a null-terminated ASCII string to the monitor.
     void monitor_write(const char *c);
 
+    // Handle arrow keys
+    void arrow_up();
+    void arrow_right();
+    void arrow_left();
+    void arrow_down();
+
 #ifdef __cplusplus
 }
 #endif

@@ -156,6 +156,30 @@ void monitor_put(char c)
     move_cursor();
 }
 
+void arrow_up()
+{
+    cursor_y--;
+    move_cursor();
+}
+
+void arrow_right()
+{
+    cursor_x++;
+    move_cursor();
+}
+
+void arrow_left()
+{
+    cursor_x--;
+    move_cursor();
+}
+
+void arrow_down()
+{
+    cursor_y++;
+    move_cursor();
+}
+
 // Clears the screen, by copying lots of spaces to the framebuffer.
 void monitor_clear()
 {

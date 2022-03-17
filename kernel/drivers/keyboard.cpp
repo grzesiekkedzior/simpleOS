@@ -1,5 +1,6 @@
 #include "../../include/drivers/keyboard.h"
 #include "../include/common.h"
+#include "../include/drivers/kb.h"
 
 bool is_left_shift_pressed;
 bool is_right_shift_pressed;
@@ -27,6 +28,18 @@ void handler_keyboard(u8int scancode)
         return;
     case BACKSPACE:
         monitor_put(BACKSPACE);
+        return;
+    case ARROW_UP:
+        arrow_up();
+        return;
+    case ARROW_LEFT:
+        arrow_left();
+        return;
+    case ARROW_RIGHT:
+        arrow_right();
+        return;
+    case ARROW_DOWN:
+        arrow_down();
         return;
     }
     char ascii = qwerty::translate(scancode, is_left_shift_pressed or is_right_shift_pressed);
