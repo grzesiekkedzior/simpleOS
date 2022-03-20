@@ -1,5 +1,5 @@
-#include "../../include/monitor.h"
-#include "../../include/drivers/kb.h"
+#include "../../kernel/include/drivers/tty.h"
+#include "../../kernel/include/drivers/kb.h"
 
 namespace qwerty
 {

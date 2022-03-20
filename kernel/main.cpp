@@ -1,15 +1,15 @@
-#include "monitor.h"
-#include "types.h"
-#include "time.h"
-#include "cpu.h"
-#include "../include/drivers/keyboard.h"
+#include "../kernel/include/drivers/tty.h"
+#include "../kernel/include/types.h"
+#include "../kernel/include/time.h"
+#include "../kernel/include/cpu.h"
+#include "../kernel/include/drivers/keyboard.h"
 
 
 extern "C" void set_idt();
 extern "C"
 {
-#include "isr.h"
-#include "gdt/gdt.h"
+#include "../kernel/include/isr.h"
+#include "../kernel/gdt/gdt.h"
 }
 
 extern "C" int main()

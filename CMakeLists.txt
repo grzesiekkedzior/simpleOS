@@ -12,7 +12,7 @@ ENABLE_LANGUAGE (ASM_NASM)
 add_compile_options(-I ${CMAKE_CURRENT_SOURCE_DIR}/boot )
 
 
-FILE (GLOB_RECURSE kernel_LIB_SOURCES "lib/*.cpp")
+FILE (GLOB_RECURSE kernel_LIB_SOURCES "libc/*.cpp")
 FILE (GLOB_RECURSE kernel_ASM_SOURCES "boot/*.asm")
 FILE (GLOB_RECURSE kernel_C_SOURCES "kernel/*.c")
 FILE (GLOB_RECURSE kernel_CPP_SOURCES "kernel/*.cpp")

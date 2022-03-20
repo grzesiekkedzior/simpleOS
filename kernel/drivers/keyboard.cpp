@@ -1,5 +1,5 @@
-#include "../../include/drivers/keyboard.h"
-#include "../include/common.h"
+#include "../kernel/include/drivers/keyboard.h"
+#include "../kernel/include/common.h"
 #include "../include/drivers/kb.h"
 
 bool is_left_shift_pressed;

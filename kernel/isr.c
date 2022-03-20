@@ -1,7 +1,6 @@
-#include "isr.h"
-#include "monitor.h"
-#include "util.h"
-#include "string.h"
+#include "include/isr.h"
+#include "include/drivers/tty.h"
+#include "../libc/include/string.h"
 
 void set_idt_gate(int n, u32int handler);
 void set_idt();

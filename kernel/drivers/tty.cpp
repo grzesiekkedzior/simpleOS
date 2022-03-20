@@ -3,7 +3,7 @@
 // but rewritten for JamesM's kernel tutorials www.jamesmolloy.co.uk
 // to start visit wiki.osdev.org
 
-#include "monitor.h"
+#include "../include/drivers/tty.h"
 /* Hardware text mode color constants. */
 enum vga_color
 {

@@ -1,7 +1,7 @@
 #ifndef GDT_H
 #define GDT_H
 
-#include "types.h"
+#include "../include/types.h"
 
 // This structure contains the value of one GDT entry.
 // We use the attribute 'packed' to tell GCC not to change

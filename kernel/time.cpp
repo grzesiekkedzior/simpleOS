@@ -1,7 +1,7 @@
 #define CURRENT_YEAR 2021 // Change this each year!
-#include "monitor.h"
-#include "common.h"
-#include "string.h"
+#include "../libc/include/string.h"
+#include "../kernel/include/drivers/tty.h"
+#include "../kernel/include/common.h"
 #define CURRENT_YEAR 2021 // Change this each year!
 
 int century_register = 0x00; // Set by ACPI table parsing code if possible

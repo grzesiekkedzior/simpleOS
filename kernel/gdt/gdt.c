@@ -1,5 +1,5 @@
 #include "gdt.h"
-#include "types.h"
+#include "../include/types.h"
 
 #define GDT_LEN 5
 
