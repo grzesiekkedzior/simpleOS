@@ -4,6 +4,9 @@
 // to start visit wiki.osdev.org
 
 #include "../include/drivers/tty.h"
+#include "../include/types.h"
+#include "../include/common.h"
+
 /* Hardware text mode color constants. */
 enum vga_color
 {

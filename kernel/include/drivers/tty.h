@@ -1,8 +1,6 @@
 #ifndef MONITOR_H
 #define MONITOR_H
 
-#include "../../include/common.h"
-
 #ifdef __cplusplus
 extern "C"
 {

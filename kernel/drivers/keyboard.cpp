@@ -1,6 +1,7 @@
 #include "../kernel/include/drivers/keyboard.h"
 #include "../kernel/include/common.h"
 #include "../include/drivers/kb.h"
+#include "../include/drivers/tty.h"
 
 bool is_left_shift_pressed;
 bool is_right_shift_pressed;

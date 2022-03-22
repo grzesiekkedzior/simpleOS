@@ -1,6 +1,7 @@
 #include "include/isr.h"
 #include "include/drivers/tty.h"
 #include "../libc/include/string.h"
+#include "../kernel/include/common.h"
 
 void set_idt_gate(int n, u32int handler);
 void set_idt();
