@@ -1,8 +1,7 @@
 #include "../../kernel/include/drivers/tty.h"
 #include "../../kernel/include/drivers/kb.h"
 
-namespace qwerty
-{
+namespace qwerty {
     const char ascii_table[] = {
         0, 0, '1', '2',
         '3', '4', '5', '6',
@@ -21,15 +20,12 @@ namespace qwerty
         0, ' '};
 
     // only letters and numbers no special characters
-    char translate(u8int scancode, bool uppercase)
-    {
+    char translate(u8int scancode, bool uppercase) {
         if (scancode > 58)
             return 0;
 
         if (uppercase)
-        {
             return ascii_table[scancode] - 32;
-        }
         else
             return ascii_table[scancode];
     }

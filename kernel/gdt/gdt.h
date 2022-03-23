@@ -6,8 +6,7 @@
 // This structure contains the value of one GDT entry.
 // We use the attribute 'packed' to tell GCC not to change
 // any of the alignment in the structure.
-typedef struct gdt_descr
-{
+typedef struct gdt_descr {
 	u16int limit_low; 	// The lower 16 bits of the limit.
 	u16int base_low; 	// The lower 16 bits of the base.
 	u8int base_middle;	// The next 8 bits of the base.
@@ -21,8 +20,7 @@ typedef struct gdt_descr
 	u8int base_high;
 } __attribute__((packed)) gdt_descr_t;
 
-typedef struct gdt_ptr
-{
+typedef struct gdt_ptr {
 	u16int limit; // The upper 16 bits of all selector limits.
 	u32int base;  // The address of the first gdt_entry_t struct.
 } __attribute__((packed)) gdt_ptr_t;

@@ -1,25 +1,31 @@
 #include "../include/string.h"
 
-void int_to_ascii(int n, char str[])
-{
+void int_to_ascii(int n, char str[]) {
     int i, sign;
-    if ((sign = n) < 0) n = -n;
+    if ((sign = n) < 0)
+        n = -n;
     i = 0;
     do {
         str[i++] = n % 10 + '0';
     } while ((n /= 10) > 0);
 
-    if (sign < 0) str[i++] = '-';
+    if (sign < 0)
+        str[i++] = '-';
     str[i] = '\0';
 
     reverse(str);
 }
 
+int strlen(char s[]) {
+    int i = 0;
+    while (s[i] != '\0')
+        ++i;
+    return i;
+}
 /* K&R */
-void reverse(char s[])
-{
+void reverse(char s[]) {
     int c, i, j;
-    for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
+    for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
         c = s[i];
         s[i] = s[j];
         s[j] = c;
@@ -27,48 +33,36 @@ void reverse(char s[])
 }
 
 /* K&R */
-int strlen(char s[])
-{
-    int i = 0;
-    while (s[i] != '\0') ++i;
-    return i;
-}
 
-void append(char s[], char n)
-{
+void string::append(char s[], char n) {
     int len = strlen(s);
     s[len] = n;
-    s[len+1] = '\0';
+    s[len + 1] = '\0';
 }
 
-void backspace(char s[])
-{
+void string::backspace(char s[]) {
     int len = strlen(s);
-    s[len-1] = '\0';
+    s[len - 1] = '\0';
 }
 
-/* K&R 
+/* K&R
  * Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
-int strcmp(char s1[], char s2[])
-{
+int string::strcmp(char s1[], char s2[]) {
     int i;
-    for (i = 0; s1[i] == s2[i]; i++) {
-        if (s1[i] == '\0') return 0;
-    }
+    for (i = 0; s1[i] == s2[i]; i++)
+        if (s1[i] == '\0')
+            return 0;
+            
     return s1[i] - s2[i];
 }
 
-void memory_copy(char *source, char *dest, int nbytes)
-{
+void string::memory_copy(char *source, char *dest, int nbytes) {
     int i;
     for (i = 0; i < nbytes; i++)
-    {
         *(dest + i) = *(source + i);
-    }
 }
 
-void memory_set(u8int *dest, u8int val, u32int len)
-{
+void string::memory_set(u8int *dest, u8int val, u32int len) {
     u8int *temp = (u8int *)dest;
     for (; len != 0; len--)
         *temp++ = val;

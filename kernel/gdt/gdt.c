@@ -6,8 +6,7 @@
 static gdt_descr_t gdt[GDT_LEN];
 static gdt_ptr_t gdt_ptr;
 
-void gdt_init()
-{
+void gdt_init() {
 	gdt_set_desc(&gdt[0], 0, 0, 0, 0);                // Null segment
 	gdt_set_desc(&gdt[1], 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
 	gdt_set_desc(&gdt[2], 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
@@ -19,8 +18,7 @@ void gdt_init()
 	gdt_set(&gdt_ptr);
 }
 
-static void gdt_set_desc(gdt_descr_t* descr, u32int base, u32int limit, u8int access, u8int granularity)
-{
+static void gdt_set_desc(gdt_descr_t* descr, u32int base, u32int limit, u8int access, u8int granularity) {
 	descr->base_low = (base & 0xFFFF);
 	descr->base_middle = (base >> 16) & 0xFF;
 	descr->base_high = (base >> 24) & 0xFF;

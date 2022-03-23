@@ -6,8 +6,7 @@
 bool is_left_shift_pressed;
 bool is_right_shift_pressed;
 
-void handler_keyboard(u8int scancode)
-{
+void handler_keyboard(u8int scancode) {
     switch (scancode) {
     case LEFT_SHIFT:
         is_left_shift_pressed = true;
@@ -45,13 +44,10 @@ void handler_keyboard(u8int scancode)
     }
     char ascii = qwerty::translate(scancode, is_left_shift_pressed or is_right_shift_pressed);
 
-    if (ascii != 0) {
-        monitor_put(ascii);
-    }
+    if (ascii != 0) monitor_put(ascii);
 }
 
-void io_handler()
-{
+void io_handler() {
     while (true) {
         if (inb(0x64) & 0x1) {
             u8int scancode = inb(0x60);

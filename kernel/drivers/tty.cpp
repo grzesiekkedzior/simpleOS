@@ -8,8 +8,7 @@
 #include "../include/common.h"
 
 /* Hardware text mode color constants. */
-enum vga_color
-{
+enum vga_color {
     VGA_COLOR_BLACK = 0,
     VGA_COLOR_BLUE = 1,
     VGA_COLOR_GREEN = 2,
@@ -35,8 +34,7 @@ u8int cursor_x = 0;
 u8int cursor_y = 0;
 
 // Updates the hardware cursor.
-static void move_cursor()
-{
+static void move_cursor() {
     // The screen is 80 characters wide...
     u16int cursorLocation = cursor_y * 80 + cursor_x;
     outb(0x3D4, 14);                  // Tell the VGA board we are setting the high cursor byte.
@@ -46,8 +44,7 @@ static void move_cursor()
 }
 
 // Scrolls the text on the screen up by one line.
-static void scroll()
-{
+static void scroll() {
 
     // Get a space character with the default colour attributes.
     u8int attributeByte = (0 /*black*/ << 4) | (15 /*white*/ & 0x0F);
@@ -58,23 +55,20 @@ static void scroll()
         // Move the current text chunk that makes up the screen
         // back in the buffer by a line
         int i;
-        for (i = 0 * 80; i < 24 * 80; i++) {
+        for (i = 0 * 80; i < 24 * 80; i++)
             video_memory[i] = video_memory[i + 80];
-        }
 
         // The last line should now be blank. Do this by writing
         // 80 spaces to it.
-        for (i = 24 * 80; i < 25 * 80; i++) {
+        for (i = 24 * 80; i < 25 * 80; i++)
             video_memory[i] = blank;
-        }
         // The cursor should now be on the last line.
         cursor_y = 24;
     }
 }
 
 // Writes a single character out to the screen.
-void monitor_put(char c)
-{
+void monitor_put(char c) {
     // The background colour is black (0), the foreground is white (15).
     u8int backColour = VGA_COLOR_BLACK;
     u8int foreColour = VGA_COLOR_WHITE;
@@ -123,11 +117,9 @@ void monitor_put(char c)
 
     // Handle a tab by increasing the cursor's X, but only to a point
     // where it is divisible by 8.
-    else if (c == 0x09) {
+    else if (c == 0x09)
         cursor_x = (cursor_x + 8) & ~(8 - 1);
-    }
     
-
     // Handle ENTER
     else if (c == 13) {
         cursor_x = 0;
@@ -159,41 +151,35 @@ void monitor_put(char c)
     move_cursor();
 }
 
-void arrow_up()
-{
+void arrow_up() {
     cursor_y--;
     move_cursor();
 }
 
-void arrow_right()
-{
+void arrow_right() {
     cursor_x++;
     move_cursor();
 }
 
-void arrow_left()
-{
+void arrow_left() {
     cursor_x--;
     move_cursor();
 }
 
-void arrow_down()
-{
+void arrow_down() {
     cursor_y++;
     move_cursor();
 }
 
 // Clears the screen, by copying lots of spaces to the framebuffer.
-void monitor_clear()
-{
+void monitor_clear() {
     // Make an attribute byte for the default colours
     u8int attributeByte = (0 /*black*/ << 4) | (15 /*white*/ & 0x0F);
     u16int blank = 0x20 /* space */ | (attributeByte << 8);
 
     int i;
-    for (i = 0; i < 80 * 25; i++) {
+    for (i = 0; i < 80 * 25; i++)
         video_memory[i] = blank;
-    }
 
     // Move the hardware cursor back to the start.
     cursor_x = 0;
@@ -202,20 +188,16 @@ void monitor_clear()
 }
 
 // Outputs a null-terminated ASCII string to the monitor.
-void monitor_write(const char *c)
-{
+void monitor_write(const char *c) {
     int i = 0;
-    while (c[i]) {
+    while (c[i])
         monitor_put(c[i++]);
-    }
 }
 
-void monitor_write_hex(u32int n)
-{
+void monitor_write_hex(u32int n) {
     // TODO: implement this yourself!
 }
 
-void monitor_write_dec(u32int n)
-{
+void monitor_write_dec(u32int n) {
     // TODO: implement this yourself!
 }

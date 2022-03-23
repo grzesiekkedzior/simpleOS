@@ -73,15 +73,13 @@
 #define EDX_RDTSCP                      (1 << 27)   // RDTSCP and IA32_TSC_AUX
 #define EDX_64_BIT                      (1 << 29)   // 64-bit Architecture
 
-static inline void cpuid(u32int reg, u32int *eax, u32int *ebx, u32int *ecx, u32int *edx)
-{
+static inline void cpuid(u32int reg, u32int *eax, u32int *ebx, u32int *ecx, u32int *edx) {
     __asm__ volatile("cpuid"
         : "=a" (*eax), "=b" (*ebx), "=c" (*ecx), "=d" (*edx)
         : "0" (reg));
 }
 
-void cpu_detect()
-{
+void cpu_detect() {
     // Register storage
     u32int eax, ebx, ecx, edx;
 
@@ -131,9 +129,7 @@ void cpu_detect()
         cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
 
         if (edx & EDX_64_BIT)
-        {
             monitor_write("64-bit Architecture\n");
-        }
     }
 
     if (largestExtendedFunc >= 0x80000004) {
@@ -144,9 +140,8 @@ void cpu_detect()
 
         // Processor name is right justified with leading spaces
         char *p = name;
-        while (*p == ' ') {
+        while (*p == ' ')
             ++p;
-        }
 
         monitor_write("CPU Name: ");
         monitor_write(p);

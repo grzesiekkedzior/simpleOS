@@ -10,8 +10,7 @@ isr_t interrupt_handlers[256];
 
 /* Can't do this with a loop because we need the address
  * of the function names */
-void isr_install() 
-{
+void isr_install() {
     set_idt_gate(0, (u32int)isr0);
     set_idt_gate(1, (u32int)isr1);
     set_idt_gate(2, (u32int)isr2);
@@ -117,8 +116,7 @@ char *exception_messages[] = {
     "Reserved"
 };
 
-void isr_handler(registers_t r)
-{
+void isr_handler(registers_t r) {
     monitor_write("Exception. System Halted! received interrupt: ");
     char s[3];
     int_to_ascii(r.int_no, s);
@@ -129,13 +127,11 @@ void isr_handler(registers_t r)
     for (;;);
 }
 
-void register_interrupt_handler(u8int n, isr_t handler)
-{
+void register_interrupt_handler(u8int n, isr_t handler) {
     interrupt_handlers[n] = handler;
 }
 
-void irq_handler(registers_t r)
-{
+void irq_handler(registers_t r) {
     /* After every interrupt we need to send an EOI to the PICs
      * or they will not send another interrupt again */
     if (r.int_no >= 40) outb(0xA0, 0x20); /* slave */
