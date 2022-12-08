@@ -3,7 +3,10 @@
 #include "../kernel/include/time.h"
 #include "../kernel/include/cpu.h"
 #include "../kernel/include/drivers/keyboard.h"
+#include "../kernel/include/shell.h"
+#include "../libc/include/string.h"
 
+void init();
 
 extern "C" void set_idt();
 extern "C"
@@ -12,22 +15,34 @@ extern "C"
 #include "../kernel/gdt/gdt.h"
 }
 
+shell sh;
+string str;
+
 extern "C" int main()
+{
+    init();
+    do {
+        sh.output_prompt();
+        char * arr = sh.input_line();
+        monitor_put('\n');
+        sh.output_prompt();
+        monitor_write(arr);
+        monitor_put('\n');
+    } while (true);
+
+    return 0;
+}
+
+void init()
 {
     // Initialise the screen (by clearing it)
     gdt_init();
     set_idt();
     isr_install();
     monitor_clear();
-    // Write out a sample string
-    monitor_write("WELCOME\nTIME ");
-
+    monitor_write("TIME ");
     read_rtc();
     monitor_put('\n');
     cpu_detect();
-    monitor_write("\n>");
-    io_handler();
-
-
-    return 0;
+    monitor_put('\n');
 }

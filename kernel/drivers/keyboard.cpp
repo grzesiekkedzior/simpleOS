@@ -6,52 +6,59 @@
 bool is_left_shift_pressed;
 bool is_right_shift_pressed;
 
-void handler_keyboard(u8int scancode) {
+char handler_keyboard(u8int scancode) {
     switch (scancode) {
     case LEFT_SHIFT:
         is_left_shift_pressed = true;
-        return;
+        break;
     case LEFT_SHIFT + 0x80:
         is_left_shift_pressed = false;
-        return;
+        break;
     case RIGHT_SHIFT:
         is_right_shift_pressed = true;
-        return;
+        break;
     case RIGHT_SHIFT + 0x80:
         is_right_shift_pressed = false;
-        return;
+        break;
     case ENTER:
         monitor_put(13);
-        return;
-    case SPACEBAR:
-        monitor_put(' ');
-        return;
+        break;
+    // case SPACEBAR:
+    //     monitor_put(' ');
+    //     break;
     case BACKSPACE:
         monitor_put(BACKSPACE);
-        return;
+        break;
     case ARROW_UP:
         arrow_up();
-        return;
+        break;
     case ARROW_LEFT:
         arrow_left();
-        return;
+        break;
     case ARROW_RIGHT:
         arrow_right();
-        return;
+        break;
     case ARROW_DOWN:
         arrow_down();
-        return;
+        break;
     }
     char ascii = qwerty::translate(scancode, is_left_shift_pressed or is_right_shift_pressed);
 
-    if (ascii != 0) monitor_put(ascii);
+    return ascii;
+}
+
+char get_char () {
+    if (inb(0x64) & 0x1) {
+        u8int scancode = inb(0x60);
+        return handler_keyboard(scancode);
+    }
+    return 0;
 }
 
 void io_handler() {
+    char ascii;
     while (true) {
-        if (inb(0x64) & 0x1) {
-            u8int scancode = inb(0x60);
-            handler_keyboard(scancode);
-        }
+        ascii = get_char();
+        if (ascii != 0) monitor_put(ascii);
     }
 }

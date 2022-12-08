@@ -32,15 +32,3 @@ void memcpy(u8int *dest, const u8int *src, u32int len) {
 void memset(u8int *dest, u8int val, u32int len) {
     // TODO: implement this yourself!
 }
-
-// Copy the NULL-terminated string src into dest, and
-// return dest.
-char *strcpy(char *dest, const char *src) {
-    // TODO: implement this yourself!
-}
-
-// Concatenate the NULL-terminated string src onto
-// the end of dest, and return dest.
-char *strcat(char *dest, const char *src) {
-    // TODO: implement this yourself!
-}

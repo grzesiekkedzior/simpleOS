@@ -2,7 +2,8 @@
 #define KEYBOARD_H
 #include "../types.h"
 
-void handler_keyboard(u8int scancode);
+char handler_keyboard(u8int scancode);
 void io_handler();
+char get_char();
 
 #endif

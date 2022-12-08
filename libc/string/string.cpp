@@ -67,3 +67,66 @@ void string::memory_set(u8int *dest, u8int val, u32int len) {
     for (; len != 0; len--)
         *temp++ = val;
 }
+
+void string::reverse(char s[]) {
+    int c, i, j;
+    for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+
+void string::int_to_ascii(int n, char str[]) {
+    int i, sign;
+    if ((sign = n) < 0)
+        n = -n;
+    i = 0;
+    do {
+        str[i++] = n % 10 + '0';
+    } while ((n /= 10) > 0);
+
+    if (sign < 0)
+        str[i++] = '-';
+    str[i] = '\0';
+
+    reverse(str);
+}
+
+int string::strlen(char s[]) {
+    int i = 0;
+    while (s[i] != '\0')
+        ++i;
+    return i;
+}
+
+char *string::strcpy(char *dest, char *src) {
+    if (src == nullptr) return nullptr;
+
+    char *ptr = dest;
+
+    while (*src != '\0') {
+        *dest = *src;
+        ++dest;
+        ++src;
+    }
+    *dest = '\0';
+
+    return ptr;
+}
+
+char *string::strcat(char *dest, char *src) {
+    if (src == nullptr) return nullptr;
+
+    char *ptr = dest + strlen(dest);
+
+    while (*src != '\0') {
+        *ptr = *src;
+        ++ptr;
+        ++src;
+    }
+
+    *dest = '\0';
+
+    return ptr;
+}
