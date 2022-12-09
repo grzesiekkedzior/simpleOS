@@ -22,7 +22,7 @@ int strlen(char s[]) {
         ++i;
     return i;
 }
-/* K&R */
+
 void reverse(char s[]) {
     int c, i, j;
     for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
@@ -31,8 +31,6 @@ void reverse(char s[]) {
         s[j] = c;
     }
 }
-
-/* K&R */
 
 void string::append(char s[], char n) {
     int len = strlen(s);

@@ -25,9 +25,13 @@ extern "C" int main()
         sh.output_prompt();
         char * arr = sh.input_line();
         monitor_put('\n');
-        sh.output_prompt();
-        monitor_write(arr);
-        monitor_put('\n');
+        
+        if (strlen(arr) != 0) {
+            sh.output_prompt();
+            monitor_write(arr);
+            monitor_put('\n');
+        }
+        
     } while (true);
 
     return 0;
