@@ -8,12 +8,11 @@ extern "C"
 {
 #endif
     void int_to_ascii(int n, char str[]);
-    void reverse(char s[]);
-    int strlen(char s[]);
+    void reverse(char *s);
+    int str_length(char *s);
 #ifdef __cplusplus
 }
-class string
-{
+class string {
 public:
     void backspace(char s[]);
     void append(char s[], char n);
@@ -22,13 +21,17 @@ public:
     void memory_copy(char *source, char *dest, int nbytes);
     void int_to_ascii(int n, char str[]);
     void reverse(char s[]);
-    int strlen(char s[]);
+    int length();
     // Copy the NULL-terminated string src into dest, and
     // return dest.
     char *strcpy(char *dest, char *src);
     // Concatenate the NULL-terminated string src onto
     // the end of dest, and return dest.
     char *strcat(char *dest, char *src);
+    void operator=(char *rhs);
+    char *getStr();
+private:
+    char *str = nullptr;
 };
 #endif
 #endif

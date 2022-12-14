@@ -26,7 +26,7 @@ extern "C" int main()
         char * arr = sh.input_line();
         monitor_put('\n');
         
-        if (strlen(arr) != 0) {
+        if (str_length(arr) != 0) {
             sh.output_prompt();
             monitor_write(arr);
             monitor_put('\n');

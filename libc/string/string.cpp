@@ -1,5 +1,6 @@
 #include "../include/string.h"
 
+
 void int_to_ascii(int n, char str[]) {
     int i, sign;
     if ((sign = n) < 0)
@@ -16,16 +17,16 @@ void int_to_ascii(int n, char str[]) {
     reverse(str);
 }
 
-int strlen(char s[]) {
+int str_length(char *s) {
     int i = 0;
     while (s[i] != '\0')
         ++i;
     return i;
 }
 
-void reverse(char s[]) {
+void reverse(char *s) {
     int c, i, j;
-    for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+    for (i = 0, j = str_length(s) - 1; i < j; i++, j--) {
         c = s[i];
         s[i] = s[j];
         s[j] = c;
@@ -33,13 +34,13 @@ void reverse(char s[]) {
 }
 
 void string::append(char s[], char n) {
-    int len = strlen(s);
+    int len = str_length(s);
     s[len] = n;
     s[len + 1] = '\0';
 }
 
 void string::backspace(char s[]) {
-    int len = strlen(s);
+    int len = str_length(s);
     s[len - 1] = '\0';
 }
 
@@ -68,7 +69,7 @@ void string::memory_set(u8int *dest, u8int val, u32int len) {
 
 void string::reverse(char s[]) {
     int c, i, j;
-    for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+    for (i = 0, j = str_length(s) - 1; i < j; i++, j--) {
         c = s[i];
         s[i] = s[j];
         s[j] = c;
@@ -91,9 +92,9 @@ void string::int_to_ascii(int n, char str[]) {
     reverse(str);
 }
 
-int string::strlen(char s[]) {
+int string::length() {
     int i = 0;
-    while (s[i] != '\0')
+    while (str[i] != '\0')
         ++i;
     return i;
 }
@@ -116,7 +117,7 @@ char *string::strcpy(char *dest, char *src) {
 char *string::strcat(char *dest, char *src) {
     if (src == nullptr) return nullptr;
 
-    char *ptr = dest + strlen(dest);
+    char *ptr = dest + str_length(dest);
 
     while (*src != '\0') {
         *ptr = *src;
@@ -125,6 +126,15 @@ char *string::strcat(char *dest, char *src) {
     }
 
     *dest = '\0';
-
+    
     return ptr;
+}
+
+void string::operator=(char *rhs) {
+    this->strcpy(this->str, rhs);
+}
+
+char *string::getStr()
+{
+    return this->str;
 }
