@@ -39,7 +39,13 @@ void string::append(char s[], char n) {
     s[len + 1] = '\0';
 }
 
-void string::backspace(char s[]) {
+string::string() : str(nullptr) {}
+
+string::string(char *s) {
+    this->strcpy(this->str, s);
+}
+void string::backspace(char s[])
+{
     int len = str_length(s);
     s[len - 1] = '\0';
 }
@@ -130,8 +136,9 @@ char *string::strcat(char *dest, char *src) {
     return ptr;
 }
 
-void string::operator=(char *rhs) {
+string string::operator=(char *rhs) {
     this->strcpy(this->str, rhs);
+    return *this;
 }
 
 char *string::getStr()

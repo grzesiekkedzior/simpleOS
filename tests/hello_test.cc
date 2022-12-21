@@ -26,3 +26,26 @@ TEST(StringTest, StringRevers) {
   EXPECT_EQ("olleH", str);
   EXPECT_NE("olleHH", str);
 }
+
+TEST(StringCmp, StringCmp) {
+  char ch[] = "Hello";
+  char ch2[] = "Hello";
+  string s;
+  EXPECT_EQ(0, s.strcmp(ch, ch2));
+}
+
+TEST(ShellTest, ShellCommandChecker) {
+  char *ch = "calendar";
+  shell sh;
+  int b = sh.is_command(ch);
+  EXPECT_EQ(1, b);
+  EXPECT_NE(0, b);
+}
+
+TEST(ShellTestProcess, ShellProcessChecker) {
+  char *ch = "calendar";
+  shell sh;
+  int b = sh.start_process(ch);
+  EXPECT_EQ(1, b);
+  EXPECT_NE(0, b);
+}

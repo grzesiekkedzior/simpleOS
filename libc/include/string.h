@@ -14,6 +14,9 @@ extern "C"
 }
 class string {
 public:
+    string();
+    string(char *s);
+
     void backspace(char s[]);
     void append(char s[], char n);
     int strcmp(char s1[], char s2[]);
@@ -28,7 +31,7 @@ public:
     // Concatenate the NULL-terminated string src onto
     // the end of dest, and return dest.
     char *strcat(char *dest, char *src);
-    void operator=(char *rhs);
+    string operator=(char *rhs);
     char *getStr();
 private:
     char *str = nullptr;

@@ -15,20 +15,21 @@ extern "C"
 #include "../kernel/gdt/gdt.h"
 }
 
-shell sh;
-string str;
-
 extern "C" int main()
 {
+    string str;
+    char *num;
+    shell sh;
     init();
     do {
         sh.output_prompt();
-        char * arr = sh.input_line();
+        char * exec = sh.input_line();
         monitor_put('\n');
         
-        if (str_length(arr) != 0) {
+        if (str_length(exec) != 0) {
             sh.output_prompt();
-            monitor_write(arr);
+            int n = sh.start_process(exec);
+            sh.process_executing(n);
             monitor_put('\n');
         }
         

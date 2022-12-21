@@ -5,6 +5,7 @@
 #include "../kernel/include/common.h"
 #include "../libc/include/string.h"
 #include "../kernel/include/shell.h"
+#include "include/builtins_programms.h"
 
 using namespace qwerty;
 
@@ -18,7 +19,17 @@ char shell::input_char(u8int scancode) {
     return ascii;
 }
 
-char *shell::input_line() {
+int shell::is_command(char *str) {
+    string s;
+    for (int i = 0; i < 10; i++) {
+        int b = s.strcmp(str, this->builtins[i]);
+    if (b == 0) return 1;
+    }
+    
+    return 0;
+}
+char *shell::input_line()
+{
     buffer[0] = '\0';
     string str;
     u8int scancode = 0;
@@ -43,12 +54,27 @@ char *shell::input_line() {
 
 // Choose program to start
 int shell::start_process(char *command) {
-
+    this->cmd = command;
+    if (is_command(command)) {
+        return 1;
+    } 
     return 0;
 }
 
-int shell::process_executing(int process) {
-
-    return 0;
+void shell::process_executing(int process) {
+    if (process) {
+        switch (process)
+        {
+        case CALENDAR:
+            monitor_write("calendar");
+            break;
+        
+        default:
+            break;
+        }
+    } else {
+        monitor_write(this->cmd);
+        monitor_write(": command not found");
+    }
 }
 
